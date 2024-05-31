@@ -3,7 +3,7 @@ package cybersource
 import (
 	"encoding/json"
 	"github.com/jjonline/cybersource-sdk-go/model/payment/response"
-	"io/ioutil"
+	"io"
 )
 
 func (c *Client) GetPayment(requestID string) (*response.GetPaymentResponse, error) {
@@ -13,7 +13,7 @@ func (c *Client) GetPayment(requestID string) (*response.GetPaymentResponse, err
 		return nil, err
 	}
 
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return nil, err
 	}

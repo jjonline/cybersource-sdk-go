@@ -2,7 +2,7 @@ package cybersource
 
 import (
 	"errors"
-	"io/ioutil"
+	"io"
 )
 
 func (c *Client) DeleteCustomer(customerID string) error {
@@ -14,7 +14,7 @@ func (c *Client) DeleteCustomer(customerID string) error {
 	}
 
 	if resp.StatusCode != 204 {
-		body, err := ioutil.ReadAll(resp.Body)
+		body, err := io.ReadAll(resp.Body)
 		if err != nil {
 			return err
 		}

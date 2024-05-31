@@ -3,7 +3,7 @@ package cybersource
 import (
 	"encoding/json"
 	"github.com/jjonline/cybersource-sdk-go/model/token_management/response"
-	"io/ioutil"
+	"io"
 )
 
 func (c *Client) RetrieveCustomerPaymentInstrument(customerID string, paymentInstrumentTokenID string) (*response.CustomerPaymentInstrumentResponse, error) {
@@ -14,7 +14,7 @@ func (c *Client) RetrieveCustomerPaymentInstrument(customerID string, paymentIns
 		return nil, err
 	}
 
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return nil, err
 	}

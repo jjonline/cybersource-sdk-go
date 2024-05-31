@@ -4,26 +4,26 @@ import (
 	"encoding/json"
 	"github.com/jjonline/cybersource-sdk-go/model/payment/request"
 	"github.com/jjonline/cybersource-sdk-go/model/payment/response"
-	"io/ioutil"
+	"io"
 )
 
-func (c *Client) ProcessPayment(req *request.CreatePaymentRequest) (*response.PaymentResponse, error) {
+func (c *Client) ProcessPayment(req *request.CreatePaymentRequest) (*response.PaymentResponse, int, error) {
 	resource := "/pts/v2/payments"
 	resp, err := c.doPost(resource, req)
 	defer resp.Body.Close()
 	if err != nil {
-		return nil, err
+		return nil, 0, err
 	}
 
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := io.ReadAll(resp.Body)
 	if err != nil {
-		return nil, err
+		return nil, resp.StatusCode, err
 	}
 
 	var paymentResp response.PaymentResponse
 	err = json.Unmarshal(body, &paymentResp)
 	if err != nil {
-		return nil, err
+		return nil, resp.StatusCode, err
 	}
-	return &paymentResp, nil
+	return &paymentResp, resp.StatusCode, nil
 }
