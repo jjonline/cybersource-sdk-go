@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"github.com/google/uuid"
 	"github.com/jjonline/cybersource-sdk-go/cybersource"
 	"github.com/jjonline/cybersource-sdk-go/model/payment/request"
 )
@@ -21,39 +20,40 @@ func testProcessPayment() {
 
 	createPaymentReq := &request.CreatePaymentRequest{
 		ClientReferenceInformation: &request.ClientReferenceInformation{
-			Code: uuid.New().String(),
+			Code: "TC50171_3",
 		},
-		ProcessingInformation: &request.ProcessingInformation{
-			CommerceIndicator: "internet",
-		},
+		//ProcessingInformation: &request.ProcessingInformation{
+		//	CommerceIndicator: "internet",
+		//},
 		OrderInformation: &request.OrderInformation{
 			AmountDetails: &request.OrderInformationAmountDetails{
-				TotalAmount: "60.00",
+				TotalAmount: "102.21",
 				Currency:    "USD",
 			},
 			BillTo: &request.OrderInformationBillTo{
 				FirstName:          "John",
 				LastName:           "Doe",
-				Address1:           "201 S. Division St.",
-				PostalCode:         "48104-2201",
-				Locality:           "Ann Arbor",
-				AdministrativeArea: "MI",
+				Address1:           "1 Market St",
+				PostalCode:         "94105",
+				Locality:           "san francisco",
+				AdministrativeArea: "CA",
 				Country:            "US",
-				PhoneNumber:        "999999999",
+				PhoneNumber:        "4158880000",
 				Email:              "test@cybs.com",
 			},
 		},
 		PaymentInformation: &request.PaymentInformation{
 			Card: &request.PaymentInformationCard{
 				ExpirationYear:  "2031",
-				Number:          "5555555555554444",
-				SecurityCode:    "123",
+				Number:          "4111111111111111",
 				ExpirationMonth: "12",
-				Type:            "002",
+				// Type:            "002",
+				// SecurityCode:    "123",
 			},
 		},
 	}
-	res, err := client.ProcessPayment(createPaymentReq)
-	fmt.Println(res)
+	res, statusCode, err := client.ProcessPayment(createPaymentReq)
+	fmt.Printf("%#v\n", res)
+	fmt.Printf("%#v\n", statusCode)
 	fmt.Println(err)
 }
