@@ -3,9 +3,8 @@ package main
 import (
 	"fmt"
 	"github.com/google/uuid"
-	"github.com/tonyxone/cybersource-rest-sdk-go/cybersource"
-	"github.com/tonyxone/cybersource-rest-sdk-go/cybersource/model"
-	"github.com/tonyxone/cybersource-rest-sdk-go/cybersource/model/request"
+	"github.com/jjonline/cybersource-sdk-go/cybersource"
+	"github.com/jjonline/cybersource-sdk-go/model/payment/request"
 )
 
 func main() {
@@ -21,18 +20,18 @@ func testProcessPayment() {
 	})
 
 	createPaymentReq := &request.CreatePaymentRequest{
-		ClientReferenceInformation: &model.ClientReferenceInformation{
+		ClientReferenceInformation: &request.ClientReferenceInformation{
 			Code: uuid.New().String(),
 		},
-		ProcessingInformation: &model.ProcessingInformation{
+		ProcessingInformation: &request.ProcessingInformation{
 			CommerceIndicator: "internet",
 		},
-		OrderInformation: &model.OrderInformation{
-			AmountDetails: &model.OrderInformationAmountDetails{
+		OrderInformation: &request.OrderInformation{
+			AmountDetails: &request.OrderInformationAmountDetails{
 				TotalAmount: "60.00",
 				Currency:    "USD",
 			},
-			BillTo: &model.OrderInformationBillTo{
+			BillTo: &request.OrderInformationBillTo{
 				FirstName:          "John",
 				LastName:           "Doe",
 				Address1:           "201 S. Division St.",
@@ -44,8 +43,8 @@ func testProcessPayment() {
 				Email:              "test@cybs.com",
 			},
 		},
-		PaymentInformation: &model.PaymentInformation{
-			Card: &model.PaymentInformationCard{
+		PaymentInformation: &request.PaymentInformation{
+			Card: &request.PaymentInformationCard{
 				ExpirationYear:  "2031",
 				Number:          "5555555555554444",
 				SecurityCode:    "123",
@@ -54,6 +53,7 @@ func testProcessPayment() {
 			},
 		},
 	}
-	err := client.ProcessPayment(createPaymentReq)
+	res, err := client.ProcessPayment(createPaymentReq)
+	fmt.Println(res)
 	fmt.Println(err)
 }

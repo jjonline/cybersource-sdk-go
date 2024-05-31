@@ -1,5 +1,3 @@
-module github.com/tonyxone/cybersource-rest-sdk-go
+module github.com/jjonline/cybersource-sdk-go
 
-go 1.18
-
-require github.com/google/uuid v1.3.0 // indirect
+go 1.22

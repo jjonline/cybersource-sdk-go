@@ -2,9 +2,9 @@ package cybersource
 
 import (
 	"encoding/json"
-	"github.com/tonyxone/cybersource-rest-sdk-go/cybersource/model/payment/request"
-	"github.com/tonyxone/cybersource-rest-sdk-go/cybersource/model/payment/response"
-	"io/ioutil"
+	"github.com/jjonline/cybersource-sdk-go/model/payment/request"
+	"github.com/jjonline/cybersource-sdk-go/model/payment/response"
+	"io"
 )
 
 func (c *Client) LookupBIN(req *request.BINLookupRequest) (*response.BINLookupResponse, error) {
@@ -15,7 +15,7 @@ func (c *Client) LookupBIN(req *request.BINLookupRequest) (*response.BINLookupRe
 		return nil, err
 	}
 
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return nil, err
 	}

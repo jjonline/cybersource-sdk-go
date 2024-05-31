@@ -1,6 +1,6 @@
 package response
 
-import "github.com/tonyxone/cybersource-rest-sdk-go/cybersource/model/payment/request"
+import "github.com/jjonline/cybersource-sdk-go/model/payment/request"
 
 type TransactionDetails struct {
 	ID                                string                                     `json:"id,omitempty"`

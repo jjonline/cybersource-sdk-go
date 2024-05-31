@@ -2,7 +2,7 @@ package cybersource
 
 import (
 	"encoding/json"
-	"github.com/tonyxone/cybersource-rest-sdk-go/cybersource/model/payment/response"
+	"github.com/jjonline/cybersource-sdk-go/model/payment/response"
 	"io/ioutil"
 )
 

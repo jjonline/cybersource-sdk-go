@@ -2,8 +2,8 @@ package cybersource
 
 import (
 	"encoding/json"
-	"github.com/tonyxone/cybersource-rest-sdk-go/cybersource/model/token_management/request"
-	"github.com/tonyxone/cybersource-rest-sdk-go/cybersource/model/token_management/response"
+	"github.com/jjonline/cybersource-sdk-go/model/token_management/request"
+	"github.com/jjonline/cybersource-sdk-go/model/token_management/response"
 	"io/ioutil"
 )
 

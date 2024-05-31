@@ -1,6 +1,6 @@
 package response
 
-import "github.com/tonyxone/cybersource-rest-sdk-go/cybersource/model/token_management"
+import "github.com/jjonline/cybersource-sdk-go/model/token_management"
 
 type CustomersResponse struct {
 	ID                         string                                         `json:"id,omitempty"`
