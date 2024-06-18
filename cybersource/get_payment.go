@@ -6,22 +6,22 @@ import (
 	"io"
 )
 
-func (c *Client) GetPayment(requestID string) (*response.GetPaymentResponse, error) {
+func (c *Client) GetPayment(requestID string) (*response.GetPaymentResponse, int, error) {
 	resource := "/pts/v2/payments/" + requestID
 	resp, err := c.doGet(resource)
 	if err != nil {
-		return nil, err
+		return nil, resp.StatusCode, err
 	}
 
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
-		return nil, err
+		return nil, resp.StatusCode, err
 	}
 
 	var getPaymentResp response.GetPaymentResponse
 	err = json.Unmarshal(body, &getPaymentResp)
 	if err != nil {
-		return nil, err
+		return nil, resp.StatusCode, err
 	}
-	return &getPaymentResp, nil
+	return &getPaymentResp, resp.StatusCode, nil
 }

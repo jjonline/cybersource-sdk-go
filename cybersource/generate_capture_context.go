@@ -8,28 +8,28 @@ import (
 	"net/http"
 )
 
-func (c *Client) GenerateCaptureContext(req *request.GenerateCaptureContextRequest) (*response.GenerateCaptureContextResponse, error) {
+func (c *Client) GenerateCaptureContext(req *request.GenerateCaptureContextRequest) (*response.GenerateCaptureContextResponse, int, error) {
 	resource := "/microform/v2/sessions"
 	resp, err := c.doPost(resource, req)
 	defer resp.Body.Close()
 	if err != nil {
-		return nil, err
+		return nil, resp.StatusCode, err
 	}
 
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
-		return nil, err
+		return nil, resp.StatusCode, err
 	}
 
 	var captureContextResp response.GenerateCaptureContextResponse
 	if resp.StatusCode != http.StatusCreated {
 		err = json.Unmarshal(body, &captureContextResp)
 		if err != nil {
-			return nil, err
+			return nil, resp.StatusCode, err
 		}
 	} else {
 		captureContextResp.CaptureContext = string(body)
 	}
 
-	return &captureContextResp, nil
+	return &captureContextResp, resp.StatusCode, nil
 }

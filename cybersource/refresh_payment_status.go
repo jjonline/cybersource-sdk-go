@@ -7,22 +7,22 @@ import (
 	"io"
 )
 
-func (c *Client) RefreshPaymentStatus(requestID string, request *request.RefreshPaymentStatusRequest) (*response.RefreshPaymentStatusResponse, error) {
+func (c *Client) RefreshPaymentStatus(requestID string, request *request.RefreshPaymentStatusRequest) (*response.RefreshPaymentStatusResponse, int, error) {
 	resource := "/pts/v2/refresh-payment-status/" + requestID
 	resp, err := c.doPost(resource, request)
 	if err != nil {
-		return nil, err
+		return nil, resp.StatusCode, err
 	}
 
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
-		return nil, err
+		return nil, resp.StatusCode, err
 	}
 
 	var refreshPaymentStatusResp response.RefreshPaymentStatusResponse
 	err = json.Unmarshal(body, &refreshPaymentStatusResp)
 	if err != nil {
-		return nil, err
+		return nil, resp.StatusCode, err
 	}
-	return &refreshPaymentStatusResp, nil
+	return &refreshPaymentStatusResp, resp.StatusCode, nil
 }

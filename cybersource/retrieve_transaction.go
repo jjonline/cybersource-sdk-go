@@ -6,22 +6,22 @@ import (
 	"io"
 )
 
-func (c *Client) RetrieveTransaction(requestID string) (*response.TransactionDetails, error) {
+func (c *Client) RetrieveTransaction(requestID string) (*response.TransactionDetails, int, error) {
 	resource := "/tss/v2/transactions/" + requestID
 	resp, err := c.doGet(resource)
 	if err != nil {
-		return nil, err
+		return nil, resp.StatusCode, err
 	}
 
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
-		return nil, err
+		return nil, resp.StatusCode, err
 	}
 
 	var transactionDetails response.TransactionDetails
 	err = json.Unmarshal(body, &transactionDetails)
 	if err != nil {
-		return nil, err
+		return nil, resp.StatusCode, err
 	}
-	return &transactionDetails, nil
+	return &transactionDetails, resp.StatusCode, nil
 }

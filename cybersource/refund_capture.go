@@ -7,23 +7,23 @@ import (
 	"io"
 )
 
-func (c *Client) RefundCapture(requestID string, req *request.RefundRequest) (*response.RefundResponse, error) {
+func (c *Client) RefundCapture(requestID string, req *request.RefundRequest) (*response.RefundResponse, int, error) {
 	resource := "/pts/v2/captures/" + requestID + "/refunds"
 	resp, err := c.doPost(resource, req)
 	defer resp.Body.Close()
 	if err != nil {
-		return nil, err
+		return nil, resp.StatusCode, err
 	}
 
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
-		return nil, err
+		return nil, resp.StatusCode, err
 	}
 
 	var refundResp response.RefundResponse
 	err = json.Unmarshal(body, &refundResp)
 	if err != nil {
-		return nil, err
+		return nil, resp.StatusCode, err
 	}
-	return &refundResp, nil
+	return &refundResp, resp.StatusCode, nil
 }

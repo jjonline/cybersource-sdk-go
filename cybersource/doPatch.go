@@ -32,5 +32,9 @@ func (c *Client) doPatch(resource string, payload interface{}) (*http.Response, 
 	req.Header.Set("Content-Type", "application/json")
 
 	httpClient := http.Client{}
-	return httpClient.Do(req)
+	res, err := httpClient.Do(req)
+	if res == nil {
+		return &http.Response{}, err
+	}
+	return res, err
 }

@@ -7,23 +7,23 @@ import (
 	"io"
 )
 
-func (c *Client) CapturePayment(requestID string, req *request.CapturePaymentRequest) (*response.CaptureResponse, error) {
+func (c *Client) CapturePayment(requestID string, req *request.CapturePaymentRequest) (*response.CaptureResponse, int, error) {
 	resource := "/pts/v2/payments/" + requestID + "/captures"
 	resp, err := c.doPost(resource, req)
 	defer resp.Body.Close()
 	if err != nil {
-		return nil, err
+		return nil, resp.StatusCode, err
 	}
 
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
-		return nil, err
+		return nil, resp.StatusCode, err
 	}
 
 	var capturePaymentResp response.CaptureResponse
 	err = json.Unmarshal(body, &capturePaymentResp)
 	if err != nil {
-		return nil, err
+		return nil, resp.StatusCode, err
 	}
-	return &capturePaymentResp, nil
+	return &capturePaymentResp, resp.StatusCode, nil
 }

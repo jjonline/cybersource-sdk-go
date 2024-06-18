@@ -7,23 +7,23 @@ import (
 	"io"
 )
 
-func (c *Client) CreateInstrumentIdentifier(req *request.InstrumentIdentifierRequest) (*response.InstrumentIdentifierResponse, error) {
+func (c *Client) CreateInstrumentIdentifier(req *request.InstrumentIdentifierRequest) (*response.InstrumentIdentifierResponse, int, error) {
 	resource := "/tms/v1/instrumentidentifiers"
 	resp, err := c.doPost(resource, req)
 	defer resp.Body.Close()
 	if err != nil {
-		return nil, err
+		return nil, resp.StatusCode, err
 	}
 
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
-		return nil, err
+		return nil, resp.StatusCode, err
 	}
 
 	var instrumentIdentifierResp response.InstrumentIdentifierResponse
 	err = json.Unmarshal(body, &instrumentIdentifierResp)
 	if err != nil {
-		return nil, err
+		return nil, resp.StatusCode, err
 	}
-	return &instrumentIdentifierResp, nil
+	return &instrumentIdentifierResp, resp.StatusCode, nil
 }

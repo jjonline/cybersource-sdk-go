@@ -23,5 +23,9 @@ func (c *Client) doDelete(resource string) (*http.Response, error) {
 	req.Header.Set("Signature", signature)
 
 	httpClient := http.Client{}
-	return httpClient.Do(req)
+	res, err := httpClient.Do(req)
+	if res == nil {
+		return &http.Response{}, err
+	}
+	return res, err
 }
