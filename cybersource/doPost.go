@@ -33,6 +33,11 @@ func (c *Client) doPost(resource string, payload interface{}) (*http.Response, e
 
 	httpClient := http.Client{}
 	res, err := httpClient.Do(req)
+
+	c.dumpDebugRequest(req)
+	c.dumpDebugResponse(res)
+
+	// confirm response res is not nil
 	if res == nil {
 		return &http.Response{}, err
 	}

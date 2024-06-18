@@ -24,6 +24,11 @@ func (c *Client) doDelete(resource string) (*http.Response, error) {
 
 	httpClient := http.Client{}
 	res, err := httpClient.Do(req)
+
+	c.dumpDebugRequest(req)
+	c.dumpDebugResponse(res)
+
+	// confirm response res is not nil
 	if res == nil {
 		return &http.Response{}, err
 	}

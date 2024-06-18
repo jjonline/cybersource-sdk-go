@@ -5,6 +5,7 @@ type Client struct {
 	merchantSecretKey string
 	merchantId        string
 	requestHost       string
+	isDebugPrint      bool
 }
 
 type Params struct {
@@ -12,6 +13,7 @@ type Params struct {
 	MerchantSecretKey string
 	MerchantId        string
 	RequestHost       string
+	IsDebugPrint      bool // 是否打印出网络请求包用语debug
 }
 
 func NewClient(params Params) *Client {
@@ -20,5 +22,6 @@ func NewClient(params Params) *Client {
 		merchantSecretKey: params.MerchantSecretKey,
 		merchantId:        params.MerchantId,
 		requestHost:       params.RequestHost,
+		isDebugPrint:      params.IsDebugPrint,
 	}
 }
