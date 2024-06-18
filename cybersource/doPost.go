@@ -31,10 +31,11 @@ func (c *Client) doPost(resource string, payload interface{}) (*http.Response, e
 	req.Header.Set("Signature", signature)
 	req.Header.Set("Content-Type", "application/json")
 
+	c.dumpDebugRequest(req)
+
 	httpClient := http.Client{}
 	res, err := httpClient.Do(req)
 
-	c.dumpDebugRequest(req)
 	c.dumpDebugResponse(res)
 
 	// confirm response res is not nil

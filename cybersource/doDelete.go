@@ -22,10 +22,11 @@ func (c *Client) doDelete(resource string) (*http.Response, error) {
 	req.Header.Set("Host", c.requestHost)
 	req.Header.Set("Signature", signature)
 
+	c.dumpDebugRequest(req)
+
 	httpClient := http.Client{}
 	res, err := httpClient.Do(req)
 
-	c.dumpDebugRequest(req)
 	c.dumpDebugResponse(res)
 
 	// confirm response res is not nil
